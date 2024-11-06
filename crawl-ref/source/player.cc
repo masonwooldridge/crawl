@@ -7248,6 +7248,23 @@ void player::teleport(bool now, bool wizard_tele)
         you_teleport();
 }
 
+void check_health_and_prompt_potion_use()
+{
+    // Check if player's HP is below 20%
+    if (you.hp < you.hp_max * 0.2)
+    {
+        // Check if the player has a healing potion in the inventory
+        if (has_healing_potion())
+        {
+            // Prompt the player to use the potion
+            if (yesno("Your health is low. Would you like to use a healing potion?", false, 'n'))
+            {
+                use_healing_potion();
+            }
+        }
+    }
+}
+
 int player::hurt(const actor *agent, int amount, beam_type flavour,
                  kill_method_type kill_type, string source, string aux,
                  bool /*cleanup_dead*/, bool /*attacker_effects*/)
@@ -7273,8 +7290,12 @@ int player::hurt(const actor *agent, int amount, beam_type flavour,
         blood_spray(pos(), type, amount / 5);
     }
 
+    check_health_and_prompt_potion_use();
+
+
     return amount;
 }
+
 
 void player::drain_stat(stat_type s, int amount)
 {

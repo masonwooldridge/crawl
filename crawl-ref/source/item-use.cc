@@ -4644,3 +4644,39 @@ void tile_item_use(int idx)
     }
 }
 #endif
+
+bool has_healing_potion()
+{
+    for (int i = 0; i < ENDOFPACK; ++i)
+    {
+        const item_def &item = you.inv[i];
+        if (!item.is_valid())
+            continue;
+
+        if (item.base_type == OBJ_POTIONS &&
+            (item.sub_type == POT_HEAL_WOUNDS || item.sub_type == POT_CURING))
+        {
+            return true; // Found a healing potion
+        }
+    }
+    return false; // No healing potion found
+}
+
+void use_healing_potion()
+{
+    for (int i = 0; i < ENDOFPACK; ++i)
+    {
+        item_def &item = you.inv[i];
+        if (!item.is_valid())
+            continue;
+
+        if (item.base_type == OBJ_POTIONS &&
+            (item.sub_type == POT_HEAL_WOUNDS || item.sub_type == POT_CURING))
+        {
+            // Use the potion
+            drink(&item);
+            // Break after using one potion
+            break;
+        }
+    }
+}
