@@ -185,7 +185,7 @@ static string _welcome(const newgame_def& ng)
         text = "unnamed " + text;
     if (!text.empty())
         text = ", " + text;
-    text = "Welcome" + text + ".";
+    text = "Welcome" + text + ". Thank you for playing Dungeon Crawl Stone Soup";
     return text;
 }
 
