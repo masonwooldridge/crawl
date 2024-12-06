@@ -433,6 +433,16 @@ const vector<GameOption*> game_options::build_options_list()
             1,
             {{"true", 1}, // XX this would be better as an enum
              {"false", 0}}, true),
+        new MultipleChoiceGameOption<int>(
+            view_lock_x_on, {"view_lock_x"},
+            1,
+            {{"true", 1}, // XX this would be better as an enum
+             {"false", 0}}, true),
+        new MultipleChoiceGameOption<int>(
+            view_lock_y_on, {"view_lock_y"},
+            1,
+            {{"true", 1}, // XX this would be better as an enum
+             {"false", 0}}, true),
         new StringGameOption(SIMPLE_NAME(game_seed), "", false,
             [this]() {
                 // special handling because of the large type.

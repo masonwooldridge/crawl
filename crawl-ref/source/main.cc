@@ -858,6 +858,9 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
 
     // Miscellaneous non-repeatable commands.
     case CMD_TOGGLE_AUTOPICKUP:
+    case CMD_SWITCH_VIEWLOCK:
+    case CMD_TOGGLE_VIEWLOCK_X:
+    case CMD_TOGGLE_VIEWLOCK_Y:
     case CMD_TOGGLE_SOUND:
     case CMD_ADJUST_INVENTORY:
     case CMD_QUIVER_ITEM:
@@ -2119,6 +2122,33 @@ void process_command(command_type cmd, command_type prev_cmd)
         else
             Options.autopickup_on = 0;
         mprf("Autopickup is now %s.", Options.autopickup_on > 0 ? "on" : "off");
+        break;
+
+    case CMD_SWITCH_VIEWLOCK:
+        if (Options.view_lock_x && Options.view_lock_y)
+        {
+            Options.view_lock_x = false;
+            Options.view_lock_y = false;
+            mprf("View lock: X (OFF), Y (OFF)");
+        }
+        else if (!Options.view_lock_x && !Options.view_lock_y)
+        {
+            Options.view_lock_x = true;
+            Options.view_lock_y = false;
+            mprf("View lock: X (ON), Y (OFF)");
+        }
+        else if (Options.view_lock_x && !Options.view_lock_y)
+        {
+            Options.view_lock_x = false;
+            Options.view_lock_y = true;
+            mprf("View lock: X (OFF), Y (ON)");
+        }
+        else
+        {
+            Options.view_lock_x = true;
+            Options.view_lock_y = true;
+            mprf("View lock: X (ON), Y (ON)");
+        }
         break;
 
 #ifdef USE_SOUND

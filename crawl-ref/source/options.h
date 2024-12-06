@@ -499,6 +499,9 @@ public:
     bool        default_manual_training;
     bool        default_show_all_skills;
 
+    int         view_lock_x_on;
+    int         view_lock_y_on;
+
     bool        show_newturn_mark;// Show underscore prefix in messages for new turn
     bool        show_game_time; // Show game time instead of player turns.
     bool        equip_bar; // Show equip bar instead of noise bar.
